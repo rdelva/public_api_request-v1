@@ -19,8 +19,9 @@ function fetchData(url){
 }
 
 
-fetchData('https://randomuser.me/api/')
+fetchData('https://randomuser.me/api/?results=12&?nat=us')
     .then( data => console.log(data))
+    
 
 
 //=============================
