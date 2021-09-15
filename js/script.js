@@ -1,4 +1,4 @@
-const url = 'https://randomuser.me/api/';
+
 const searchContainer = document.querySelector('.search-container');
 
 
@@ -11,11 +11,32 @@ const searchContainer = document.querySelector('.search-container');
 //=============================
 //Fetch Functions
 //==============================
+function fetchData(url){
+ return fetch(url)
+            .then(checkStatus)
+            .then(res => res.json())  
+            .catch(error => console.log('Looks like there was a problem', error))
+}
+
+
+fetchData('https://randomuser.me/api/')
+    .then( data => console.log(data))
 
 
 //=============================
 //Helper Functions
 //==============================
+
+//checks to see if the api connects
+function checkStatus(response){
+    if(response.ok){
+        return Promise.resolve(response);
+    } else {
+        return Promise.reject(new Error(response.statusText));
+    }    
+}
+
+
 
 /*Generate Cards*/
 
