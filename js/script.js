@@ -18,13 +18,9 @@ function fetchData(url){
 }
 
 
-fetchData('https://randomuser.me/api/?results=12&nat=us')
-    
-    .then(data => {                  
-        generateCard(data.results);
-               
-    })
-  
+fetchData('https://randomuser.me/api/?results=12&nat=us')    
+    .then(data => generateCard(data.results))
+    .then(data => modalWindow(data.results)) 
     
 
 
@@ -65,21 +61,32 @@ function generateCard(users){
 
     gallery.insertAdjacentHTML('beforeend', html); 
     
-    const cards = document.getElementsByClassName('card');
-    //console.log(cards);
+ 
+
     selectCard();
 }
 
 
 function selectCard(){
-    window.addEventListener('click', (e) => {
-        console.log(e.target);
+    const gallery = document.querySelector('#gallery');
+    const cards = gallery.getElementsByClassName('card');
+    console.log(cards);
+    gallery.addEventListener('click', (e) => { 
+
+        if(e.target.classList.contains('card')){
+            console.log('hi');            
+           const selectedCard = e.target;
+           const name = selectedCard.querySelector('h3').innerHTML; 
+           console.log(selectedCard);
+           console.log(name);
+        }
 
     });
 
+
 }
 
-function generateModal() {
+function generateModal(users) {
 
 
     let html = '';
