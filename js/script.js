@@ -19,7 +19,7 @@ function fetchData(url){
 }
 
 
-fetchData('https://randomuser.me/api/?results=12&?nat=us')
+fetchData('https://randomuser.me/api/?results=12&nat=us')
     
     .then(data => {
         const users = data.results;        
@@ -46,8 +46,7 @@ function checkStatus(response){
 /*Generate Cards*/
 
 function generateCard(users){
-    console.log(users[0]);
-    
+    console.log(users);
     const gallery = document.getElementById('gallery');
    
     let html = '';
@@ -157,7 +156,6 @@ function modalWindow() {
 
 
 
-generateCard();
 generateModal();
 selectCards();
 
