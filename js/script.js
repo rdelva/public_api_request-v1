@@ -1,7 +1,6 @@
 
 const searchContainer = document.querySelector('.search-container');
 
-
 // 1. Set up connection to the Api
 // 2. find out out where most of the data is comming From
 // 3. use fetch 
@@ -23,7 +22,9 @@ fetchData('https://randomuser.me/api/?results=12&nat=us')
     
     .then(data => {                  
         generateCard(data.results);
+               
     })
+  
     
 
 
@@ -62,18 +63,25 @@ function generateCard(users){
             </div> `        
     });
 
-    gallery.insertAdjacentHTML('beforeend', html);
-    console.log(html);
-
-
-    const cards = document.querySelectorAll('.card');
+    gallery.insertAdjacentHTML('beforeend', html); 
+    
+    const cards = document.getElementsByClassName('card');
     //console.log(cards);
-    selectCards(cards);
+    selectCard();
 }
 
 
+function selectCard(){
+    window.addEventListener('click', (e) => {
+        console.log(e.target);
+
+    });
+
+}
 
 function generateModal() {
+
+
     let html = '';
     html += `     
     <div class="modal-container">
@@ -106,22 +114,8 @@ function generateModal() {
 
 }
 
-function selectCards(cards){
-    //console.log(cards);
-   
-    window.addEventListener('click', (e) => {
-        //console.log(e.target.classList);
-        if(e.target.classList.contains('card') ){
-            generateModal();
-            const modal = document.querySelector('.modal-container');
-            modal.style.display = 'block';
-            modalWindow();
-        }
- 
-    });
- 
 
-}
+
 
 
 function modalWindow() {
@@ -149,7 +143,7 @@ function modalWindow() {
 
 
 generateModal();
-selectCards();
+
 
 
 
