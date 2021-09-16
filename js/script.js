@@ -64,11 +64,8 @@ function generateCard(users){
             <p class="card-text">${users[i].email}</p>
             <p class="card-text cap">${users[i].location.city}, ${users[i].location.state}</p>
         </div>
-        </div>
-        
-            
+        </div>      
         `;
-
 
     }// end of for loop
 
