@@ -14,16 +14,15 @@ const searchContainer = document.querySelector('.search-container');
 function fetchData(url){
  return fetch(url)
             .then(checkStatus)
-            .then(res => res.json())  
+            .then(res => res.json())         
             .catch(error => console.log('Looks like there was a problem', error))
 }
 
 
 fetchData('https://randomuser.me/api/?results=12&nat=us')
     
-    .then(data => {
-        const users = data.results;        
-        generateCard(users);
+    .then(data => {                  
+        generateCard(data.results);
     })
     
 
@@ -46,30 +45,27 @@ function checkStatus(response){
 /*Generate Cards*/
 
 function generateCard(users){
-    console.log(users);
-    const gallery = document.getElementById('gallery');
-   
+    
+    const gallery = document.getElementById('gallery');   
     let html = '';
+    
+     users.forEach(user => {      
 
-    for(let i = 0; i < users.length; i++){
+        gallery.insertAdjacentHTML('beforeend', 
+            `<div class="card">
+                <div class="card-img-container">
+                    <img class="card-img" src="${user.picture.medium}" alt="profile picture">
+                </div>
+                <div class="card-info-container">
+                    <h3 id="name" class="card-name cap">${user.name.first} ${user.name.last}</h3>
+                    <p class="card-text">${user.email}</p>
+                    <p class="card-text cap">${user.location.city}, ${user.location.state}</p>
+                </div>
+            </div> `
+        );
+    });
 
-        html += `
-        
-        <div class="card">
-        <div class="card-img-container">
-            <img class="card-img" src="${users[i].picture.medium}" alt="profile picture">
-        </div>
-        <div class="card-info-container">
-            <h3 id="name" class="card-name cap">${users[i].name.first} ${users[i].name.last}</h3>
-            <p class="card-text">${users[i].email}</p>
-            <p class="card-text cap">${users[i].location.city}, ${users[i].location.state}</p>
-        </div>
-        </div>      
-        `;
 
-    }// end of for loop
-
-    gallery.insertAdjacentHTML('beforeend', html);
 
     const cards = document.querySelectorAll('.card');
     //console.log(cards);
