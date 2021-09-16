@@ -20,7 +20,11 @@ function fetchData(url){
 
 
 fetchData('https://randomuser.me/api/?results=12&?nat=us')
-    .then( data => console.log(data))
+    
+    .then(data => {
+        const users = data.results;        
+        generateCard(users);
+    })
     
 
 
@@ -41,26 +45,28 @@ function checkStatus(response){
 
 /*Generate Cards*/
 
-function generateCard(){
+function generateCard(users){
+    console.log(users[0]);
     
     const gallery = document.getElementById('gallery');
    
     let html = '';
 
-    for(let i = 0; i < 50; i++){
+    for(let i = 0; i < users.length; i++){
 
         html += `
         
-            <div class="card">
-            <div class="card-img-container">
-                <img class="card-img" src="https://placehold.it/90x90" alt="profile picture">
-            </div>
-            <div class="card-info-container">
-                <h3 id="name" class="card-name cap">first last</h3>
-                <p class="card-text">email</p>
-                <p class="card-text cap">city, state</p>
-            </div>
-            </div>
+        <div class="card">
+        <div class="card-img-container">
+            <img class="card-img" src="${users[i].picture.medium}" alt="profile picture">
+        </div>
+        <div class="card-info-container">
+            <h3 id="name" class="card-name cap">${users[i].name.first} ${users[i].name.last}</h3>
+            <p class="card-text">${users[i].email}</p>
+            <p class="card-text cap">${users[i].location.city}, ${users[i].location.state}</p>
+        </div>
+        </div>
+        
             
         `;
 
