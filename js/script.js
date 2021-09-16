@@ -49,10 +49,8 @@ function generateCard(users){
     const gallery = document.getElementById('gallery');   
     let html = '';
     
-     users.forEach(user => {      
-
-        gallery.insertAdjacentHTML('beforeend', 
-            `<div class="card">
+    users.forEach(user => {           
+            html +=`<div class="card">
                 <div class="card-img-container">
                     <img class="card-img" src="${user.picture.medium}" alt="profile picture">
                 </div>
@@ -61,10 +59,11 @@ function generateCard(users){
                     <p class="card-text">${user.email}</p>
                     <p class="card-text cap">${user.location.city}, ${user.location.state}</p>
                 </div>
-            </div> `
-        );
+            </div> `        
     });
 
+    gallery.insertAdjacentHTML('beforeend', html);
+    console.log(html);
 
 
     const cards = document.querySelectorAll('.card');
