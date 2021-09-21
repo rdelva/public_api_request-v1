@@ -113,7 +113,7 @@ function generateModal(name, users ) {
         </div>
     </div>`;
 
-    gallery.insertAdjacentHTML('beforeend', html);
+    gallery.insertAdjacentHTML('afterend', html);
     const close = document.getElementById('modal-close-btn');
  
     console.log(close);
