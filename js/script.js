@@ -72,14 +72,10 @@ function selectCard(users){
     console.log(cards);
     gallery.addEventListener('click', (e) => { 
 
-        if(e.target.classList.contains('card')){
-                    
+        if(e.target.classList.contains('card')){                    
            const selectedCard = e.target;
-           const name = selectedCard.querySelector('h3').innerHTML; 
-           //console.log(selectedCard);
-           //console.log(name);
-           generateModal(name, users);
-          
+           const name = selectedCard.querySelector('h3').innerHTML;          
+           generateModal(name, users);         
 
         }
 
@@ -89,23 +85,24 @@ function selectCard(users){
 }
 
 function generateModal(name, users ) {
-    console.log(users);
-    console.log(name);
-    console.log('hi'); 
+ 
+    const selectedUser = users.filter( user =>  `${user.name.first} ${user.name.last}` == name );
+    console.log(selectedUser[0]);
+
     let html = '';
     html += `     
     <div class="modal-container">
         <div class="modal">
             <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
             <div class="modal-info-container">
-                <img class="modal-img" src="${name}" alt="profile picture">
-                <h3 id="name" class="modal-name cap">name</h3>
-                <p class="modal-text">email</p>
-                <p class="modal-text cap">city</p>
+                <img class="modal-img" src="${selectedUser[0].picture.large}" alt="profile picture">
+                <h3 id="name" class="modal-name cap">${selectedUser[0].name.first} ${selectedUser[0].name.last}</h3>
+                <p class="modal-text">${selectedUser[0].email}</p>
+                <p class="modal-text cap">${selectedUser[0].location.city}</p>
                 <hr>
-                <p class="modal-text">(555) 555-5555</p>
-                <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
-                <p class="modal-text">Birthday: 10/21/2015</p>
+                <p class="modal-text">${selectedUser[0].phone}</p>
+                <p class="modal-text">${selectedUser[0].location.street.number} ${selectedUser[0].location.street.name} ${selectedUser[0].location.city}, ${selectedUser[0].location.state} ${selectedUser[0].location.postcode}</p>
+                <p class="modal-text">Birthday: ${selectedUser[0].dob} 10/21/2015</p>
             </div>
         </div>
 
@@ -126,8 +123,12 @@ function generateModal(name, users ) {
         const modal = document.querySelector(".modal-container");
         console.log(modal);
         e.preventDefault();       
-        modal.style.display = 'none';
-      
+
+        //removes the modal from the code in order for it be reinserted again
+        modal.remove();
+        
+
+
     });  
 
 }
