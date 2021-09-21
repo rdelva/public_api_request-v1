@@ -20,7 +20,7 @@ function fetchData(url){
 
 fetchData('https://randomuser.me/api/?results=12&nat=us')    
     .then(data => generateCard(data.results))
-    .then(data => modalWindow(data.results)) 
+    
     
 
 
@@ -61,24 +61,26 @@ function generateCard(users){
 
     gallery.insertAdjacentHTML('beforeend', html); 
     
- 
-
-    selectCard();
+     selectCard(users);
+     
 }
 
 
-function selectCard(){
+function selectCard(users){
     const gallery = document.querySelector('#gallery');
     const cards = gallery.getElementsByClassName('card');
     console.log(cards);
     gallery.addEventListener('click', (e) => { 
 
         if(e.target.classList.contains('card')){
-            console.log('hi');            
+                    
            const selectedCard = e.target;
            const name = selectedCard.querySelector('h3').innerHTML; 
-           console.log(selectedCard);
-           console.log(name);
+           //console.log(selectedCard);
+           //console.log(name);
+           generateModal(name, users);
+          
+
         }
 
     });
@@ -86,16 +88,17 @@ function selectCard(){
 
 }
 
-function generateModal(users) {
-
-
+function generateModal(name, users ) {
+    console.log(users);
+    console.log(name);
+    console.log('hi'); 
     let html = '';
     html += `     
     <div class="modal-container">
         <div class="modal">
             <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
             <div class="modal-info-container">
-                <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
+                <img class="modal-img" src="${name}" alt="profile picture">
                 <h3 id="name" class="modal-name cap">name</h3>
                 <p class="modal-text">email</p>
                 <p class="modal-text cap">city</p>
@@ -114,10 +117,18 @@ function generateModal(users) {
     </div>`;
 
     gallery.insertAdjacentHTML('beforeend', html);
-        const modal = document.querySelector('.modal-container');
-   
-    modal.style.display = 'none';
+    const close = document.getElementById('modal-close-btn');
+ 
+    console.log(close);
 
+   
+    close.addEventListener('click', (e) => {
+        const modal = document.querySelector(".modal-container");
+        console.log(modal);
+        e.preventDefault();       
+        modal.style.display = 'none';
+      
+    });  
 
 }
 
@@ -127,21 +138,9 @@ function generateModal(users) {
 
 function modalWindow() {
     
-    const close = document.getElementById('modal-close-btn');
-    console.log(close);
 
-    console.log('hi');
-    close.addEventListener('click', (e) => {
-        //e.preventDefault();
-        console.log(e);
-        //console.log('hi');
-        // if(e.target.tagName == 'BUTTON'){
-        //     modal.style.display = 'none';
-        //     console.log("hi");
 
-        // }
-
-    });
+    
 }
 
 
@@ -149,7 +148,6 @@ function modalWindow() {
 
 
 
-generateModal();
 
 
 
