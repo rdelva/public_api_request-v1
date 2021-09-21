@@ -102,7 +102,7 @@ function generateModal(name, users ) {
                 <hr>
                 <p class="modal-text">${selectedUser[0].phone}</p>
                 <p class="modal-text">${selectedUser[0].location.street.number} ${selectedUser[0].location.street.name} ${selectedUser[0].location.city}, ${selectedUser[0].location.state} ${selectedUser[0].location.postcode}</p>
-                <p class="modal-text">Birthday: ${selectedUser[0].dob} 10/21/2015</p>
+                <p class="modal-text">Birthday: ${selectedUser[0].dob.date} 10/21/2015</p>
             </div>
         </div>
 
