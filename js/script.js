@@ -55,8 +55,7 @@ function checkStatus(response){
 * @param (array of objects) users - list of all the users
 */
 function generateCard(users){
-    console.log(users);
-    
+       
     const gallery = document.getElementById('gallery');   
     let html = '';
     
@@ -104,7 +103,7 @@ function selectCard(users){
 function generateModal(name, users ) {
  
     const selectedUser = users.filter( user =>  `${user.name.first} ${user.name.last}` == name );
-    console.log(selectedUser[0]);
+   
 
     let html = '';
     html += `     
@@ -130,22 +129,11 @@ function generateModal(name, users ) {
         </div>
     </div>`;
 
-    fixDate(selectedUser[0].dob.date);
+    fixDate(selectedUser[0].dob.date); //formats date to readable format
 
     gallery.insertAdjacentHTML('afterend', html);
-    const close = document.getElementById('modal-close-btn');
- 
-    console.log(close);
-
+    cardFunctions(users);
    
-    close.addEventListener('click', (e) => {
-        const modal = document.querySelector(".modal-container");
-        //console.log(modal);
-        e.preventDefault();       
-
-        //removes the modal from the code in order for it be reinserted again
-        modal.remove();      
-    });  
 }
 
 /**
@@ -156,17 +144,67 @@ function fixDate(fullDate){
    
     const d = new Date(fullDate).toLocaleDateString();
     const seperatedDate = d.split('/');
-    console.log(seperatedDate);
-    //Inserts O for a single digit value
+    //Inserts a O  before a single digit value
     for(let i=0; i < seperatedDate.length; i++){  //will only look at the month and date
         if(seperatedDate[i] < 10) {
             seperatedDate[i] = `0${seperatedDate[i]}`;
         }
     }
     const birthDate = seperatedDate.join('-');    
-    console.log(birthDate);
-
     return birthDate;
+}
+
+
+function cardFunctions(users) {
+    
+    const cards = document.querySelectorAll('.card');
+    const close = document.getElementById('modal-close-btn');
+    const prevButton = document.getElementById("modal-prev");
+    const nextButton = document.getElementById("modal-next");
+    const modal = document.querySelector(".modal-container");
+    // console.log(users);
+    // console.log(cards);
+
+    
+    /** Close Button */
+    close.addEventListener('click', (e) => {
+        
+        //console.log(modal);
+        e.preventDefault();       
+
+        //removes the modal from the code in order for it be reinserted again
+        modal.remove();      
+    });  
+
+    /** Next Button */
+    nextButton.addEventListener('click', (e) => {
+        const modalWindow = document.querySelector('.modal');
+        const currentName = modalWindow.querySelector('#name').innerHTML;
+        //console.log(currentName);
+        //find the card in the list
+        
+        for(let i = 0; i < users.length; i++) {
+            //Combined the first and last name in the user list
+            const fullNameList = `${users[i].name.first} ${users[i].name.last}`;         
+            
+            // go down the list till you find the name
+            if(fullNameList == currentName){
+                //if you find the next Name in the Card
+                let nextCardIndex = 0;
+                nextCardIndex = i;
+                nextCardIndex++;                        
+             
+                const nextCard = `${users[nextCardIndex].name.first} ${users[nextCardIndex].name.last}`;
+                   console.log(nextCard);
+                   modal.remove(); 
+                   generateModal(nextCard, users);
+            }
+
+        }// end of for loop
+
+    });
+
+
 }
 
 
