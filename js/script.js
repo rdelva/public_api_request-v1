@@ -254,7 +254,7 @@ function cardFunctions(users) {
 
 
 
-function modalWindow() {
+function searchBox() {
     
 
 
