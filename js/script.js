@@ -197,8 +197,7 @@ function cardFunctions(users) {
                     nextCardIndex++;                        
              
                     if(i == users.length - 1){
-                        nextButton.setAttribute('disabled','disabled');
-                    
+                        nextButton.setAttribute('disabled','disabled');                    
 
                     } else {
                         
@@ -216,7 +215,36 @@ function cardFunctions(users) {
 
 
     prevButton.addEventListener('click', (e) => {
+        const modalWindow = document.querySelector('.modal');                        
+        const currentName = modalWindow.querySelector('#name').innerHTML;   
 
+        for(let i = 0; i < users.length; i++){
+            const fullNameList = `${users[i].name.first} ${users[i].name.last}`;  
+            
+                 // go down the list till you find the name
+
+                 if(fullNameList == currentName){
+                    //if you find the next Name in the Card
+                    let prevCardIndex = 0;
+                    prevCardIndex = i;
+                    prevCardIndex--;                        
+             
+                    if(i == 0){
+                        prevButton.setAttribute('disabled','disabled');                    
+
+                    } else {
+                        
+                        const prevCard = `${users[prevCardIndex].name.first} ${users[prevCardIndex].name.last}`;
+                        console.log(prevCard);
+                        modal.remove(); 
+                        generateModal(prevCard, users); 
+
+                    }                     
+            }   
+
+
+
+        }
 
     });
 
