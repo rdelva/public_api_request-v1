@@ -182,25 +182,41 @@ function cardFunctions(users) {
         const currentName = modalWindow.querySelector('#name').innerHTML;
         //console.log(currentName);
         //find the card in the list
+
         
         for(let i = 0; i < users.length; i++) {
             //Combined the first and last name in the user list
             const fullNameList = `${users[i].name.first} ${users[i].name.last}`;         
             
-            // go down the list till you find the name
+            
+                 // go down the list till you find the name
             if(fullNameList == currentName){
-                //if you find the next Name in the Card
-                let nextCardIndex = 0;
-                nextCardIndex = i;
-                nextCardIndex++;                        
+                    //if you find the next Name in the Card
+                    let nextCardIndex = 0;
+                    nextCardIndex = i;
+                    nextCardIndex++;                        
              
-                const nextCard = `${users[nextCardIndex].name.first} ${users[nextCardIndex].name.last}`;
-                   console.log(nextCard);
-                   modal.remove(); 
-                   generateModal(nextCard, users);
-            }
+                    if(i == users.length - 1){
+                        nextButton.setAttribute('disabled','disabled');
+                    
+
+                    } else {
+                        
+                        const nextCard = `${users[nextCardIndex].name.first} ${users[nextCardIndex].name.last}`;
+                        console.log(nextCard);
+                        modal.remove(); 
+                        generateModal(nextCard, users); 
+
+                    }                     
+            }     
 
         }// end of for loop
+
+    }); // end of next Button
+
+
+    prevButton.addEventListener('click', (e) => {
+
 
     });
 
