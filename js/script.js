@@ -200,7 +200,7 @@ function cardFunctions(users) {
                         nextButton.setAttribute('disabled','disabled');                    
 
                     } else {
-                        
+                        nextButton.removeAttribute('disabled'); 
                         const nextCard = `${users[nextCardIndex].name.first} ${users[nextCardIndex].name.last}`;
                         console.log(nextCard);
                         modal.remove(); 
@@ -233,7 +233,7 @@ function cardFunctions(users) {
                         prevButton.setAttribute('disabled','disabled');                    
 
                     } else {
-                        
+                        prevButton.removeAttribute('disabled'); 
                         const prevCard = `${users[prevCardIndex].name.first} ${users[prevCardIndex].name.last}`;
                         console.log(prevCard);
                         modal.remove(); 
