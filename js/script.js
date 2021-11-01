@@ -30,6 +30,7 @@ function fetchData(url){
     */
 fetchData('https://randomuser.me/api/?results=12&nat=us')    
     .then(data => generateCard(data.results))
+   
       
     
 
@@ -75,6 +76,7 @@ function generateCard(users){
     gallery.insertAdjacentHTML('beforeend', html); 
     
      selectCard(users);
+     searchBox(users);
      
 }
 
@@ -254,17 +256,35 @@ function cardFunctions(users) {
 
 
 /* Creates searchbox to put ontop of page*/
-function searchBox() {
+function searchBox(employees) {
     const searchContainer = document.querySelector('.search-container');
+    //console.log(results);
+    
     searchContainer.innerHTML = 
     `<form action="#" method="get">
         <input type="search" id="search-input" class="search-input" placeholder="Search...">
         <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
     </form>`;    
+
+    const searchSubmit = document.getElementById('search-submit');
+    const searchInput = document.getElementById('search-input');
+
+    const cards = document.getElementsByClassName('card');
+    searchSubmit.addEventListener('click', (e) => {
+        e.preventDefault();
+        const searchValue = searchInput.value;
+        console.log(searchValue);
+        
+        
+        const cardsFound = employees.filter( employee =>   `${employee.name.first} ${employee.name.last}`.includes(searchValue));
+
+        console.log(cardsFound);
+
+    });
+
 } // end of searchBox()
 
 
-searchBox();
 
 
 
