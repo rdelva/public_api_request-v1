@@ -56,6 +56,7 @@ function checkStatus(response){
 * @param (array of objects) users - list of all the users
 */
 function generateCard(users){
+    console.log(users);
        
     const gallery = document.getElementById('gallery');   
     let html = '';
@@ -274,13 +275,15 @@ function searchBox(employees) {
         e.preventDefault();
         const searchValue = searchInput.value;
         console.log(searchValue);
-        
-        
-        const cardsFound = employees.filter( employee =>   `${employee.name.first} ${employee.name.last}`.includes(searchValue));
+        let pattern = new RegExp(searchValue)        
+        const cardsFound = employees.filter( employee =>   pattern.test(`${employee.name.first} ${employee.name.last}`) );
 
-        console.log(cardsFound);
+       console.log(cardsFound);
+       clearGallery();
+        generateCard(cardsFound);
 
     });
+
 
 } // end of searchBox()
 
@@ -288,6 +291,18 @@ function searchBox(employees) {
 
 
 
+function clearGallery(){
+    const gallery = document.querySelector('#gallery');
+    // const prevCardDeck = document.querySelectorAll('.card');
+    // //console.log(cards);
+
+    // prevCardDeck.forEach( prevCardDeck => prevCardDeck.remove());
+
+    let html ='';
+    gallery.innerHTML =  html;
+
+
+}
 
 
 
