@@ -76,7 +76,7 @@ function displayCards(users){
 
     gallery.insertAdjacentHTML('beforeend', html); 
     
-    
+    searchBox(defaultList);
     
      
 
@@ -122,31 +122,30 @@ function selectCard(users){
 * Invokes fetchData sends the url to the function and if it passes sends data to generateCard
 * @param (array of objects) users - list of all the users
 */
-// function generateCard(users){
+function generateCard(foundCards){
 
-//     const defaultList = users;
-//     const gallery = document.getElementById('gallery');   
-//     let html = '';
+    const gallery = document.getElementById('gallery');   
+    let html = '';
     
-//     users.forEach(user => {           
-//             html +=`<div class="card">
-//                 <div class="card-img-container">
-//                     <img class="card-img" src="${user.picture.medium}" alt="profile picture">
-//                 </div>
-//                 <div class="card-info-container">
-//                     <h3 id="name" class="card-name cap">${user.name.first} ${user.name.last}</h3>
-//                     <p class="card-text">${user.email}</p>
-//                     <p class="card-text cap">${user.location.city}, ${user.location.state}</p>
-//                 </div>
-//             </div> `        
-//     });
+    foundCards.forEach(card => {           
+            html +=`<div class="card">
+                <div class="card-img-container">
+                    <img class="card-img" src="${card.picture.medium}" alt="profile picture">
+                </div>
+                <div class="card-info-container">
+                    <h3 id="name" class="card-name cap">${card.name.first} ${card.name.last}</h3>
+                    <p class="card-text">${card.email}</p>
+                    <p class="card-text cap">${card.location.city}, ${card.location.state}</p>
+                </div>
+            </div> `        
+    });
 
-//     gallery.insertAdjacentHTML('beforeend', html); 
+    gallery.insertAdjacentHTML('beforeend', html); 
     
-//      selectCard(users);
-//      searchBox(users);
+     selectCard(foundCards);
+     searchBox(foundCards);
      
-// }
+}
 
 
 
@@ -336,8 +335,7 @@ function cardFunctions(users) {
 /* Creates searchbox to put ontop of page*/
 function searchBox(employees) {
     const searchContainer = document.querySelector('.search-container');
-    const cards = document.querySelectorAll('.card');
-    //console.log(results);
+    
     
     searchContainer.innerHTML = 
     `<form action="#" method="get">
@@ -348,13 +346,12 @@ function searchBox(employees) {
     const searchSubmit = document.getElementById('search-submit');
     const searchInput = document.getElementById('search-input');
 
-    //const cards = document.getElementsByClassName('card');
+   // Users the employeeList to find which names match or contains the entered value and then sends it to generateCard to be displayed
     searchSubmit.addEventListener('click', (e) => {
         e.preventDefault();
         const searchValue = searchInput.value;
-        console.log(searchValue);
         let pattern = new RegExp(searchValue) 
-        console.log(cards);       
+               
         const cardsFound = employees.filter( employee =>   pattern.test(`${employee.name.first} ${employee.name.last}`) );
 
        console.log(cardsFound);
