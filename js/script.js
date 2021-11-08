@@ -29,7 +29,7 @@ function fetchData(url){
     * @param (string) url - location of where the api is located
     */
 fetchData('https://randomuser.me/api/?results=12&nat=us')    
-    .then(data => generateCard(data.results))
+    .then(data => displayCards(data.results))
    
       
     
@@ -49,15 +49,15 @@ function checkStatus(response){
 }
 
 
-
 /**
-* generateCard()
-* Invokes fetchData sends the url to the function and if it passes sends data to generateCard
+* displayCards()
+* Invokes fetchData sends the url to the function and if it passes sends data to displayCard. Initlizies all the cards onto  the screen
+* Note: this function is only used ONCE!!
 * @param (array of objects) users - list of all the users
 */
-function generateCard(users){
-    console.log(users);
-       
+
+function displayCards(users){
+    const defaultList = users;
     const gallery = document.getElementById('gallery');   
     let html = '';
     
@@ -76,11 +76,11 @@ function generateCard(users){
 
     gallery.insertAdjacentHTML('beforeend', html); 
     
-     selectCard(users);
-     searchBox(users);
+    
+    
      
-}
 
+}
 
 function selectCard(users){
    
@@ -106,14 +106,50 @@ function selectCard(users){
             selectedCard.classList.add('selected');                
             const name = selectedCard.querySelector('h3').innerHTML;          
             generateModal(name, users);   
-         
-
         }
 
     });
 
-
 }
+
+
+
+
+
+
+/**
+* generateCard()
+* Invokes fetchData sends the url to the function and if it passes sends data to generateCard
+* @param (array of objects) users - list of all the users
+*/
+// function generateCard(users){
+
+//     const defaultList = users;
+//     const gallery = document.getElementById('gallery');   
+//     let html = '';
+    
+//     users.forEach(user => {           
+//             html +=`<div class="card">
+//                 <div class="card-img-container">
+//                     <img class="card-img" src="${user.picture.medium}" alt="profile picture">
+//                 </div>
+//                 <div class="card-info-container">
+//                     <h3 id="name" class="card-name cap">${user.name.first} ${user.name.last}</h3>
+//                     <p class="card-text">${user.email}</p>
+//                     <p class="card-text cap">${user.location.city}, ${user.location.state}</p>
+//                 </div>
+//             </div> `        
+//     });
+
+//     gallery.insertAdjacentHTML('beforeend', html); 
+    
+//      selectCard(users);
+//      searchBox(users);
+     
+// }
+
+
+
 
 
 
@@ -198,19 +234,20 @@ function cardFunctions(users) {
     /** Close Button */
     close.addEventListener('click', (e) => {
         
-        //console.log(modal);
         e.preventDefault();       
 
         //removes the modal from the code in order for it be reinserted again
         modal.remove();      
     });  
 
+
+
     /** Next Button */
     nextButton.addEventListener('click', (e) => {
         const modalWindow = document.querySelector('.modal');
 
         // is the current name that appears in the modal window
-        const currentName = modalWindow.querySelector('#name').innerHTML;
+        const currentNameDisplayed = modalWindow.querySelector('#name').innerHTML;
 
         //select all the cards that are currently in the gallery
         const cards = document.getElementsByClassName('card');
