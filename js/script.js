@@ -76,7 +76,9 @@ function displayCards(users){
 
     gallery.insertAdjacentHTML('beforeend', html); 
     
+    selectCard(users);
     searchBox(defaultList);
+    
     
      
 
@@ -104,8 +106,9 @@ function selectCard(users){
 
             // adds the selected class to the card that is chosen
             selectedCard.classList.add('selected');                
-            const name = selectedCard.querySelector('h3').innerHTML;          
-            generateModal(name, users);   
+            const name = selectedCard.querySelector('h3').innerHTML;    
+             
+            generateModal(users);   
         }
 
     });
@@ -123,6 +126,7 @@ function selectCard(users){
 * @param (array of objects) users - list of all the users
 */
 function generateCard(foundCards){
+
 
     const gallery = document.getElementById('gallery');   
     let html = '';
@@ -149,16 +153,18 @@ function generateCard(foundCards){
 
 
 
+function generateModal(users) {
 
-
-
-function generateModal(name, users ) {
     const modal = document.querySelector('modal-container');
+    const selectedCard = document.querySelector('.selected');
+    const selectedName = selectedCard.querySelector('h3').innerHTML;
+    //console.log(selectedName);
   
+
 
     if(modal ==  null){
 
-        const selectedUser = users.filter( user =>  `${user.name.first} ${user.name.last}` == name );
+        const selectedUser = users.filter( user =>  `${user.name.first} ${user.name.last}` == selectedName );
         let html = '';
         html += `     
         <div class="modal-container">
@@ -244,86 +250,62 @@ function cardFunctions(users) {
     /** Next Button */
     nextButton.addEventListener('click', (e) => {
         const modalWindow = document.querySelector('.modal');
+        const currentCard = document.querySelector('.selected');
 
         // is the current name that appears in the modal window
         const currentNameDisplayed = modalWindow.querySelector('#name').innerHTML;
 
         //select all the cards that are currently in the gallery
         const cards = document.getElementsByClassName('card');
-        console.log(cards);
 
-        //console.log(currentName);
-        //find the card in the list
 
+        // go to the next card
+        const nextCard = currentCard.nextElementSibling;
         
+        if(nextCard){
+            nextCard.classList.add('selected');
+            removeModal();
+            //const name = nextCard.querySelector('h3');
+            generateModal(users);
+          
+            if(currentCard.classList.contains('selected')){
+                currentCard.classList.remove('selected');
+                //generateModal();
+            } 
+        }
+     
 
-        // for(){
-
-        // }
-
-
-
-        // for(let i = 0; i < cards.length; i++) {
-        //     //Combined the first and last name in the user list
-        //     const fullNameList = `${users[i].name.first} ${users[i].name.last}`;         
-            
-            
-        //          // go down the list till you find the name
-        //     if(fullNameList == currentName){
-        //             //if you find the next Name in the Card
-        //             let nextCardIndex = 0;
-        //             nextCardIndex = i;
-        //             nextCardIndex++;                        
-             
-        //             if(i == users.length - 1){
-        //                 nextButton.setAttribute('disabled','disabled');                    
-
-        //             } else {
-        //                 nextButton.removeAttribute('disabled'); 
-        //                 const nextCard = `${users[nextCardIndex].name.first} ${users[nextCardIndex].name.last}`;
-        //                 console.log(nextCard);
-        //                 modal.remove(); 
-        //                 generateModal(nextCard, users); 
-
-        //             }                     
-        //     }     
-
-        // }// end of for loop
+  
 
     }); // end of next Button
 
 
     prevButton.addEventListener('click', (e) => {
-        const modalWindow = document.querySelector('.modal');                        
-        const currentName = modalWindow.querySelector('#name').innerHTML;   
-
-        for(let i = 0; i < users.length; i++){
-            const fullNameList = `${users[i].name.first} ${users[i].name.last}`;  
-            
-                 // go down the list till you find the name
-
-                 if(fullNameList == currentName){
-                    //if you find the next Name in the Card
-                    let prevCardIndex = 0;
-                    prevCardIndex = i;
-                    prevCardIndex--;                        
+        const modalWindow = document.querySelector('.modal');   
+        const currentCard = document.querySelector('.selected');
+                     
+        const currentName = modalWindow.querySelector('#name').innerHTML;  
+        
+                // go to the next card
+                const prevCard = currentCard.previousElementSibling;
+        
+                if(prevCard){
+                    prevCard.classList.add('selected');
+                    removeModal();
+                    //const name = nextCard.querySelector('h3');
+                    generateModal(users);
+                  
+                    if(currentCard.classList.contains('selected')){
+                        currentCard.classList.remove('selected');
+                        //generateModal();
+                    } 
+                }
              
-                    if(i == 0){
-                        prevButton.setAttribute('disabled','disabled');                    
-
-                    } else {
-                        prevButton.removeAttribute('disabled'); 
-                        const prevCard = `${users[prevCardIndex].name.first} ${users[prevCardIndex].name.last}`;
-                        console.log(prevCard);
-                        modal.remove(); 
-                        generateModal(prevCard, users); 
-
-                    }                     
-            }   
 
 
 
-        }
+
+
 
     });
 
@@ -385,7 +367,6 @@ function removeModal() {
     const modal = document.querySelector('.modal-container');
     modal.remove();
 }
-
 
 
 
