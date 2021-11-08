@@ -85,14 +85,28 @@ function generateCard(users){
 function selectCard(users){
    
     const gallery = document.querySelector('#gallery');
-    const cards = gallery.getElementsByClassName('card');
+    const cards = gallery.querySelectorAll('.card');
+
     
     gallery.addEventListener('click', (e) => { 
 
+       
         if(e.target.classList.contains('card')){                    
-           const selectedCard = e.target;
-           const name = selectedCard.querySelector('h3').innerHTML;          
-           generateModal(name, users);         
+            const selectedCard = e.target; 
+
+            // goes through the list and removes the selected class before the user clicks on another card
+            cards.forEach( card => {
+                if(card.classList.contains('selected')){
+                    card.classList.remove('selected');
+
+                }
+            });
+
+            // adds the selected class to the card that is chosen
+            selectedCard.classList.add('selected');                
+            const name = selectedCard.querySelector('h3').innerHTML;          
+            generateModal(name, users);   
+         
 
         }
 
@@ -104,38 +118,50 @@ function selectCard(users){
 
 
 function generateModal(name, users ) {
- 
-    const selectedUser = users.filter( user =>  `${user.name.first} ${user.name.last}` == name );
-   
+    const modal = document.querySelector('modal-container');
+  
 
-    let html = '';
-    html += `     
-    <div class="modal-container">
-        <div class="modal">
-            <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
-            <div class="modal-info-container">
-                <img class="modal-img" src="${selectedUser[0].picture.large}" alt="profile picture">
-                <h3 id="name" class="modal-name cap">${selectedUser[0].name.first} ${selectedUser[0].name.last}</h3>
-                <p class="modal-text">${selectedUser[0].email}</p>
-                <p class="modal-text cap">${selectedUser[0].location.city}</p>
-                <hr>
-                <p class="modal-text">${selectedUser[0].phone}</p>
-                <p class="modal-text">${selectedUser[0].location.street.number} ${selectedUser[0].location.street.name} ${selectedUser[0].location.city}, ${selectedUser[0].location.state} ${selectedUser[0].location.postcode}</p>
-                <p class="modal-text">Birthday: ${fixDate(selectedUser[0].dob.date)}</p>
+    if(modal ==  null){
+
+        const selectedUser = users.filter( user =>  `${user.name.first} ${user.name.last}` == name );
+        let html = '';
+        html += `     
+        <div class="modal-container">
+            <div class="modal">
+                <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+                <div class="modal-info-container">
+                    <img class="modal-img" src="${selectedUser[0].picture.large}" alt="profile picture">
+                    <h3 id="name" class="modal-name cap">${selectedUser[0].name.first} ${selectedUser[0].name.last}</h3>
+                    <p class="modal-text">${selectedUser[0].email}</p>
+                    <p class="modal-text cap">${selectedUser[0].location.city}</p>
+                    <hr>
+                    <p class="modal-text">${selectedUser[0].phone}</p>
+                    <p class="modal-text">${selectedUser[0].location.street.number} ${selectedUser[0].location.street.name} ${selectedUser[0].location.city}, ${selectedUser[0].location.state} ${selectedUser[0].location.postcode}</p>
+                    <p class="modal-text">Birthday: ${fixDate(selectedUser[0].dob.date)}</p>
+                </div>
             </div>
-        </div>
-        
-        
-        <div class="modal-btn-container">
-            <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
-            <button type="button" id="modal-next" class="modal-next btn">Next</button>
-        </div>
-    </div>`;
+            
+            
+            <div class="modal-btn-container">
+                <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+                <button type="button" id="modal-next" class="modal-next btn">Next</button>
+            </div>
+        </div>`;
+    
+        fixDate(selectedUser[0].dob.date); //formats date to readable format
+    
+        gallery.insertAdjacentHTML('afterend', html);
+        cardFunctions(users);
 
-    fixDate(selectedUser[0].dob.date); //formats date to readable format
+    } else {
+        removeModal();
+    }
+   
+ 
+    
+   
+  
 
-    gallery.insertAdjacentHTML('afterend', html);
-    cardFunctions(users);
    
 }
 
@@ -182,37 +208,51 @@ function cardFunctions(users) {
     /** Next Button */
     nextButton.addEventListener('click', (e) => {
         const modalWindow = document.querySelector('.modal');
+
+        // is the current name that appears in the modal window
         const currentName = modalWindow.querySelector('#name').innerHTML;
+
+        //select all the cards that are currently in the gallery
+        const cards = document.getElementsByClassName('card');
+        console.log(cards);
+
         //console.log(currentName);
         //find the card in the list
 
         
-        for(let i = 0; i < users.length; i++) {
-            //Combined the first and last name in the user list
-            const fullNameList = `${users[i].name.first} ${users[i].name.last}`;         
+
+        // for(){
+
+        // }
+
+
+
+        // for(let i = 0; i < cards.length; i++) {
+        //     //Combined the first and last name in the user list
+        //     const fullNameList = `${users[i].name.first} ${users[i].name.last}`;         
             
             
-                 // go down the list till you find the name
-            if(fullNameList == currentName){
-                    //if you find the next Name in the Card
-                    let nextCardIndex = 0;
-                    nextCardIndex = i;
-                    nextCardIndex++;                        
+        //          // go down the list till you find the name
+        //     if(fullNameList == currentName){
+        //             //if you find the next Name in the Card
+        //             let nextCardIndex = 0;
+        //             nextCardIndex = i;
+        //             nextCardIndex++;                        
              
-                    if(i == users.length - 1){
-                        nextButton.setAttribute('disabled','disabled');                    
+        //             if(i == users.length - 1){
+        //                 nextButton.setAttribute('disabled','disabled');                    
 
-                    } else {
-                        nextButton.removeAttribute('disabled'); 
-                        const nextCard = `${users[nextCardIndex].name.first} ${users[nextCardIndex].name.last}`;
-                        console.log(nextCard);
-                        modal.remove(); 
-                        generateModal(nextCard, users); 
+        //             } else {
+        //                 nextButton.removeAttribute('disabled'); 
+        //                 const nextCard = `${users[nextCardIndex].name.first} ${users[nextCardIndex].name.last}`;
+        //                 console.log(nextCard);
+        //                 modal.remove(); 
+        //                 generateModal(nextCard, users); 
 
-                    }                     
-            }     
+        //             }                     
+        //     }     
 
-        }// end of for loop
+        // }// end of for loop
 
     }); // end of next Button
 
@@ -259,6 +299,7 @@ function cardFunctions(users) {
 /* Creates searchbox to put ontop of page*/
 function searchBox(employees) {
     const searchContainer = document.querySelector('.search-container');
+    const cards = document.querySelectorAll('.card');
     //console.log(results);
     
     searchContainer.innerHTML = 
@@ -270,17 +311,19 @@ function searchBox(employees) {
     const searchSubmit = document.getElementById('search-submit');
     const searchInput = document.getElementById('search-input');
 
-    const cards = document.getElementsByClassName('card');
+    //const cards = document.getElementsByClassName('card');
     searchSubmit.addEventListener('click', (e) => {
         e.preventDefault();
         const searchValue = searchInput.value;
         console.log(searchValue);
-        let pattern = new RegExp(searchValue)        
+        let pattern = new RegExp(searchValue) 
+        console.log(cards);       
         const cardsFound = employees.filter( employee =>   pattern.test(`${employee.name.first} ${employee.name.last}`) );
 
        console.log(cardsFound);
        clearGallery();
         generateCard(cardsFound);
+        
 
     });
 
@@ -304,6 +347,10 @@ function clearGallery(){
 
 }
 
+function removeModal() {
+    const modal = document.querySelector('.modal-container');
+    modal.remove();
+}
 
 
 
