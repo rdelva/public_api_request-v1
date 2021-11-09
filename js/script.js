@@ -127,7 +127,7 @@ function selectCard(users){
 
 /**
 * generateCard()
-* Invokes fetchData sends the url to the function and if it passes sends data to generateCard
+* Generate card is used after you get the list from searchBox
 * @param (array of objects) users - list of all the users
 */
 function generateCard(foundCards){
