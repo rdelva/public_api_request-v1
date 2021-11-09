@@ -94,22 +94,26 @@ function selectCard(users){
     gallery.addEventListener('click', (e) => { 
 
        
-        if(e.target.classList.contains('card')){                    
-            const selectedCard = e.target; 
+        if(e.target.tagName == 'DIV'){ 
+            if(e.target.classList.contains('card')){
+                const selectedCard = e.target; 
 
-            // goes through the list and removes the selected class before the user clicks on another card
-            cards.forEach( card => {
-                if(card.classList.contains('selected')){
-                    card.classList.remove('selected');
+                // goes through the list and removes the selected class before the user clicks on another card
+                cards.forEach( card => {
+                    if(card.classList.contains('selected')){
+                        card.classList.remove('selected');
+    
+                    }
+                });
+    
+                // adds the selected class to the card that is chosen
+                selectedCard.classList.add('selected');                
+                const name = selectedCard.querySelector('h3').innerHTML;    
+                 
+                generateModal(users);  
 
-                }
-            });
-
-            // adds the selected class to the card that is chosen
-            selectedCard.classList.add('selected');                
-            const name = selectedCard.querySelector('h3').innerHTML;    
-             
-            generateModal(users);   
+            }                   
+ 
         }
 
     });
