@@ -25,7 +25,7 @@ function fetchData(url){
 
 
  /**
-    * Invokes fetchData sends the url to the function and if it passes sends data to generateCard
+    * Invokes fetchData sends the url to the function and if it passes sends data to displayCards()
     * @param (string) url - location of where the api is located
     */
 fetchData('https://randomuser.me/api/?results=12&nat=us')    
@@ -57,7 +57,7 @@ function checkStatus(response){
 */
 
 function displayCards(users){
-    const defaultList = users;
+    
     const gallery = document.getElementById('gallery');   
     let html = '';
     
@@ -76,8 +76,8 @@ function displayCards(users){
 
     gallery.insertAdjacentHTML('beforeend', html); 
     
-    selectCard(users);
-    searchBox(defaultList);
+    selectCard(users); // sends it to select cards to be passed down to generateModals
+    searchBox(users); // sends the list to the searchBox
     
     
      
@@ -85,6 +85,7 @@ function displayCards(users){
 }
 
 function selectCard(users){
+    
    
     const gallery = document.querySelector('#gallery');
     const cards = gallery.querySelectorAll('.card');
@@ -146,8 +147,9 @@ function generateCard(foundCards){
 
     gallery.insertAdjacentHTML('beforeend', html); 
     
-     selectCard(foundCards);
+     //selectCard(foundCards);
      searchBox(foundCards);
+
      
 }
 
@@ -262,16 +264,17 @@ function cardFunctions(users) {
         // go to the next card
         const nextCard = currentCard.nextElementSibling;
         
-        if(nextCard){
+        if(nextCard != null){
             nextCard.classList.add('selected');
             removeModal();
             //const name = nextCard.querySelector('h3');
-            generateModal(users);
-          
             if(currentCard.classList.contains('selected')){
                 currentCard.classList.remove('selected');
                 //generateModal();
             } 
+            generateModal(users);
+          
+       
         }
      
 
@@ -293,19 +296,15 @@ function cardFunctions(users) {
                     prevCard.classList.add('selected');
                     removeModal();
                     //const name = nextCard.querySelector('h3');
-                    generateModal(users);
-                  
                     if(currentCard.classList.contains('selected')){
                         currentCard.classList.remove('selected');
                         //generateModal();
                     } 
+                    generateModal(users);
+                  
+              
                 }
              
-
-
-
-
-
 
     });
 
