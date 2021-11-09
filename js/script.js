@@ -137,7 +137,7 @@ function generateCard(foundCards){
     let html = '';
     
     foundCards.forEach(card => {           
-            html +=`<div class="card">
+            html +=`<div class="card cardDisplay">
                 <div class="card-img-container">
                     <img class="card-img" src="${card.picture.medium}" alt="profile picture">
                 </div>
@@ -148,6 +148,8 @@ function generateCard(foundCards){
                 </div>
             </div> `        
     });
+
+
 
     gallery.insertAdjacentHTML('beforeend', html); 
     
@@ -173,7 +175,7 @@ function generateModal(users) {
         const selectedUser = users.filter( user =>  `${user.name.first} ${user.name.last}` == selectedName );
         let html = '';
         html += `     
-        <div class="modal-container">
+        <div class="modal-container modalClose">
             <div class="modal">
                 <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
                 <div class="modal-info-container">
@@ -246,7 +248,6 @@ function cardFunctions(users) {
     close.addEventListener('click', (e) => {
         
         e.preventDefault();       
-
         //removes the modal from the code in order for it be reinserted again
         modal.remove();      
     });  

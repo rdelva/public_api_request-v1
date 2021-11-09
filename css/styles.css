@@ -204,6 +204,46 @@ header h1 {
   }
   
 
+
+/* ===================================== 
+   My CSS Code  
+======================================== */
+
+
+.card:hover {
+    border-color:#578ea3;
+}
+
+@keyframes fade-in {
+    from {opacity: 0;}
+    to {opacity:1}
+}
+
+.cardDisplay {
+    animation-name: fade-in;
+    animation-duration: .6s;
+    animation-timing-function: linear;
+}
+
+@keyframes modal-fadeout{
+    from {opacity: 1;}
+    to {opacity:0}
+}
+
+
+.modalClose{
+    animation-name: fade-in;
+    animation-duration: .3s;
+   
+}
+
+
+
+
+
+
+
+
 /* ===================================== 
    Media Queries
 ======================================== */
