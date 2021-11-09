@@ -218,15 +218,15 @@ function generateModal(users) {
 */
 function fixDate(fullDate){  
    
-    const d = new Date(fullDate).toLocaleDateString();
-    const seperatedDate = d.split('/');
-    //Inserts a O  before a single digit value
-    for(let i=0; i < seperatedDate.length; i++){  //will only look at the month and date
-        if(seperatedDate[i] < 10) {
-            seperatedDate[i] = `0${seperatedDate[i]}`;
-        }
-    }
-    const birthDate = seperatedDate.join('-');    
+    const birthDate = new Date(fullDate).toLocaleDateString();
+    // const seperatedDate = d.split('/');
+    // //Inserts a O  before a single digit value
+    // for(let i=0; i < seperatedDate.length; i++){  //will only look at the month and date
+    //     if(seperatedDate[i] < 10) {
+    //         seperatedDate[i] = `0${seperatedDate[i]}`;
+    //     }
+    // }
+    // const birthDate = seperatedDate.join('-');    
     return birthDate;
 }
 
