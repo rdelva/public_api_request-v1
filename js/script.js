@@ -334,7 +334,7 @@ function searchBox(employees) {
     searchSubmit.addEventListener('click', (e) => {
         e.preventDefault();
         const searchValue = searchInput.value;
-        let pattern = new RegExp(searchValue) 
+        let pattern = new RegExp(searchValue,'i') 
                
         const cardsFound = employees.filter( employee =>   pattern.test(`${employee.name.first} ${employee.name.last}`) );
 
