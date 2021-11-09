@@ -293,16 +293,14 @@ function cardFunctions(users) {
                      
         const currentName = modalWindow.querySelector('#name').innerHTML;  
         
-                // go to the next card
+                // go to the previous card
                 const prevCard = currentCard.previousElementSibling;
         
                 if(prevCard){
                     prevCard.classList.add('selected');
                     removeModal();
-                    //const name = nextCard.querySelector('h3');
                     if(currentCard.classList.contains('selected')){
                         currentCard.classList.remove('selected');
-                        //generateModal();
                     } 
                     generateModal(users);
                   
@@ -310,7 +308,7 @@ function cardFunctions(users) {
                 }
              
 
-    });
+    }); // end of prevButton
 
 
 }
@@ -355,10 +353,6 @@ function searchBox(employees) {
 
 function clearGallery(){
     const gallery = document.querySelector('#gallery');
-    // const prevCardDeck = document.querySelectorAll('.card');
-    // //console.log(cards);
-
-    // prevCardDeck.forEach( prevCardDeck => prevCardDeck.remove());
 
     let html ='';
     gallery.innerHTML =  html;
