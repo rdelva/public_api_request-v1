@@ -1,13 +1,6 @@
 
 const searchContainer = document.querySelector('.search-container');
 
-// 1. Set up connection to the Api
-// 2. find out out where most of the data is comming From
-// 3. use fetch 
-//4. Grab data for name, 
-//4 build the boxes first
-
-
 
  /**
     * Use fetch data to pull json data into app
