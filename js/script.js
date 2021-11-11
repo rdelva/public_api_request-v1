@@ -40,9 +40,7 @@ function checkStatus(response){
         return Promise.reject(new Error(response.statusText));
     }    
 }
-
-
-
+//checks to see if .selected is listed within the cards before putting the .selected class on another card this will be called by the selectCard class
 function removeSelected(){    
     const cards =  document.querySelectorAll('.card');
     cards.forEach( card => { 
