@@ -48,6 +48,16 @@ function checkStatus(response){
     }    
 }
 
+function removeSelected(){    
+    const cards =  document.querySelectorAll('.card');
+    console.log('Hi');
+    cards.forEach( card => { 
+        if(card.classList.contains('selected')){
+            card.classList.remove('selected');
+        } 
+    });    
+} // end of removeSelected();
+
 
 /**
 * displayCards()
@@ -90,33 +100,28 @@ function selectCard(users){
     const gallery = document.querySelector('#gallery');
     const cards = gallery.querySelectorAll('.card');
 
-    
-    gallery.addEventListener('click', (e) => { 
-
-       
-        if(e.target.tagName == 'DIV'){ 
-            if(e.target.classList.contains('card')){
+    cards.forEach( card => { 
+        card.addEventListener('click', (e) => {
+           
                 const selectedCard = e.target; 
+         
+                if(selectedCard.parentNode.parentNode.classList.contains('card')){
+                    removeSelected();
+                    selectedCard.parentNode.parentNode.classList.add('selected');
 
-                // goes through the list and removes the selected class before the user clicks on another card
-                cards.forEach( card => {
-                    if(card.classList.contains('selected')){
-                        card.classList.remove('selected');
-    
-                    }
-                });
-    
-                // adds the selected class to the card that is chosen
-                selectedCard.classList.add('selected');                
-                const name = selectedCard.querySelector('h3').innerHTML;    
-                 
-                generateModal(users);  
+                }
 
-            }                   
- 
-        }
+                if(selectedCard.classList.contains('card')){
+                    removeSelected();
+                    selectedCard.classList.add('selected');
+                }
+  
+                
+                generateModal(users);          
+        });      
 
     });
+
 
 }
 
@@ -153,7 +158,7 @@ function generateCard(foundCards){
 
     gallery.insertAdjacentHTML('beforeend', html); 
     
-     //selectCard(foundCards);
+     selectCard(foundCards);
      searchBox(foundCards);
 
      
@@ -338,7 +343,7 @@ function searchBox(employees) {
                
         const cardsFound = employees.filter( employee =>   pattern.test(`${employee.name.first} ${employee.name.last}`) );
 
-       console.log(cardsFound);
+       
        clearGallery();
         generateCard(cardsFound);
         
