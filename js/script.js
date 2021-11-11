@@ -48,9 +48,10 @@ function checkStatus(response){
     }    
 }
 
+
+
 function removeSelected(){    
     const cards =  document.querySelectorAll('.card');
-    console.log('Hi');
     cards.forEach( card => { 
         if(card.classList.contains('selected')){
             card.classList.remove('selected');
