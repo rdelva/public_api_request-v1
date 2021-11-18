@@ -42,7 +42,7 @@ function checkStatus(response){
 }
 //checks to see if .selected is listed within the cards before putting the .selected class on another card this will be called by the selectCard class
 function removeSelected(){    
-    const cards =  document.querySelectorAll('a');
+    const cards =  document.querySelectorAll('.card');
     cards.forEach( card => { 
         if(card.classList.contains('selected')){
             card.classList.remove('selected');
@@ -64,7 +64,7 @@ function displayCards(users){
     let html = '';
     
     users.forEach(user => {           
-            html +=`<a><div class="card">
+            html +=`<div class="card">
                 <div class="card-img-container">
                     <img class="card-img" src="${user.picture.medium}" alt="profile picture">
                 </div>
@@ -73,8 +73,10 @@ function displayCards(users){
                     <p class="card-text">${user.email}</p>
                     <p class="card-text cap">${user.location.city}, ${user.location.state}</p>
                 </div>
-            </div> </a>`;        
+            </div>`;        
     });
+
+ 
 
     gallery.insertAdjacentHTML('beforeend', html); 
     
@@ -87,69 +89,32 @@ function displayCards(users){
 }
 
 function selectCard(users){
-    
-    const gallery = document.getElementById('gallery');
-    const cards = gallery.querySelectorAll('a');
 
-    
-    
-    console.log(cards);
-    // const imgContainer = gallery.querySelectorAll('.card-img-container');
-    // const textContainer = gallery.querySelectorAll('.card-info-container');
+    const cards = document.querySelectorAll('.card');
+ 
+    cards.forEach(card => {
+        
+            card.style.position  = 'relative';
+
+        const imgContainer = card.querySelector('.card-img-container');
+        const textContainer = card.querySelector('.card-info-container');
+
+        imgContainer.classList.add('main-link');
+        textContainer.classList.add('main-link');
+
+        const mainLink = card.getElementsByClassName('main-link');
+        card.classList.add('main-link');
 
 
-    cards.forEach( card => {
-        card.addEventListener('click', (e) => {         
-             
-            if(card.tagName == 'A'){
-                card.style.display = 'flex';
-                removeSelected();   
-                card.classList.add('selected');
-                generateModal(users);   
-            }                      
-    
+        card.addEventListener('click', (e) =>{
+
+            removeSelected();
+            card.classList.add('selected');
+            generateModal(users);  
         });
+        
+
     });
-
-
-
-
-
-
-
-
-    
-
-    // cards.forEach( card => { 
-    //     card.addEventListener('click', (e) => {
-
-           
-
-
-
-
-    //             const selectedCard = e.target; 
-
-    //             if(selectedCard.tagName == 'DIV'){
-
-    //             }
-         
-    //             // if(selectedCard.parentNode.parentNode.classList.contains('card')){
-    //             //     removeSelected();
-    //             //     selectedCard.parentNode.parentNode.classList.add('selected');
-
-    //             // }
-
-    //             // if(selectedCard.classList.contains('card')){
-    //             //     removeSelected();
-    //             //     selectedCard.classList.add('selected');
-    //             // }
-  
-                
-    //             generateModal(users);          
-    //     });      
-
-    // });
 
 
 }// end of selectCards
@@ -171,7 +136,7 @@ function generateCard(foundCards){
     let html = '';
     
     foundCards.forEach(card => {           
-            html +=`<a><div class="card cardDisplay">
+            html +=`<div class="card cardDisplay">
                 <div class="card-img-container">
                     <img class="card-img" src="${card.picture.medium}" alt="profile picture">
                 </div>
@@ -180,7 +145,7 @@ function generateCard(foundCards){
                     <p class="card-text">${card.email}</p>
                     <p class="card-text cap">${card.location.city}, ${card.location.state}</p>
                 </div>
-            </div></a> `        
+            </div> `;        
     });
 
 
