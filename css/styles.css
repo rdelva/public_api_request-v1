@@ -212,6 +212,7 @@ header h1 {
 
 .card:hover {
     border-color:#578ea3;
+   
 }
 
 @keyframes fade-in {
